@@ -9,7 +9,11 @@ public class Puzzler {
     }
     
     public static int getPieceLength(int imageWidth, int imageHeight, int desired) {
-        return 0;
+        if (imageWidth % desired == 0 && imageHeight % desired == 0) {
+            return desired;
+        }
+        
+        return desired;
     }
     
 }
