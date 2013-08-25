@@ -13,7 +13,7 @@ public class Puzzler {
             throw new IllegalArgumentException(String.format("Cannot use a piece size [%s] that doesn't divide evenly into the width [%s] and height[%s]", pieceSize, width, height));
         }
         
-        return new Puzzle(width, height, pieceSize);
+        return Puzzle.generate(image, width, height, pieceSize);
     }
     
 }
