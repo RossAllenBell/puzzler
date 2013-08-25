@@ -23,8 +23,8 @@ public class PuzzlePiece {
     private BufferedImage image;
     private Map<DIR, PuzzlePieceEdge> edges;
     
-    public PuzzlePiece(BufferedImage pieceImage, PuzzlePieceEdge north, PuzzlePieceEdge east, PuzzlePieceEdge south, PuzzlePieceEdge west) {
-        this.image = pieceImage;
+    public PuzzlePiece(BufferedImage pieceBoundsImage, PuzzlePieceEdge north, PuzzlePieceEdge east, PuzzlePieceEdge south, PuzzlePieceEdge west) {
+        this.image = pieceBoundsImage;
         edges = new HashMap<>();
         edges.put(DIR.NORTH, north);
         edges.put(DIR.EAST, east);

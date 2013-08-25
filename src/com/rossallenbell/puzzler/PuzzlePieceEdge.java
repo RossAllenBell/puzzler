@@ -16,7 +16,8 @@ public class PuzzlePieceEdge {
         }
     }
     
-    public static PuzzlePieceEdge FLAT = new PuzzlePieceEdge(FEATURE.NONE, false);
+    public static final PuzzlePieceEdge FLAT = new PuzzlePieceEdge(FEATURE.NONE, false);
+    public static final double FEATURE_WIDTH_RATIO = 0.25;
     
     private static FEATURE[] featuresWithoutNone = new FEATURE[]{FEATURE.NUB_STRAIGHT, FEATURE.NUB_LEFT, FEATURE.NUB_RIGHT};
     
