@@ -1,6 +1,8 @@
 package com.rossallenbell.puzzler;
 
-import static org.junit.Assert.*;
+import static com.rossallenbell.puzzler.util.TestUtil.MOTORCYLEHEIGHT;
+import static com.rossallenbell.puzzler.util.TestUtil.MOTORCYLEWIDTH;
+import static org.junit.Assert.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -36,12 +38,12 @@ public class PuzzlerTest {
     public void testPuzzlefyDefaultSizes() {
         Puzzle puzzle = puzzler.puzzlefy(image, 40);
         
-        assertEquals(1280, puzzle.getWidth());
-        assertEquals(960, puzzle.getHeight());
+        assertEquals(MOTORCYLEWIDTH, puzzle.getWidth());
+        assertEquals(MOTORCYLEHEIGHT, puzzle.getHeight());
         assertEquals(40, puzzle.getPieceSize());
     }
     
-    @Test (expected=IllegalArgumentException.class) 
+    @Test(expected = IllegalArgumentException.class)
     public void testPuzzlefyInvalidSizeInput() {
         puzzler.puzzlefy(image, 150, 100, 15);
     }

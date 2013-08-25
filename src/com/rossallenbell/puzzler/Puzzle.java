@@ -1,5 +1,6 @@
 package com.rossallenbell.puzzler;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,13 +13,19 @@ public class Puzzle {
     private int pieceSize;
     
     private List<PuzzlePiece> pieces;
-
+    
     public static Puzzle generate(BufferedImage image, int width, int height, int pieceSize) {
         Puzzle puzzle = new Puzzle(width, height, pieceSize);
         
-        for (int y=0; y<puzzle.height / puzzle.pieceSize; y++) {
-            for (int x=0; x<puzzle.width / puzzle.pieceSize; x++) {
-                puzzle.pieces.add(new PuzzlePiece());
+        for (int y = 0; y < puzzle.height / puzzle.pieceSize; y++) {
+            for (int x = 0; x < puzzle.width / puzzle.pieceSize; x++) {
+                BufferedImage subImage = image.getSubimage(x * pieceSize, y * pieceSize, pieceSize, pieceSize);
+                BufferedImage copiedSubImage = new BufferedImage(subImage.getWidth(), subImage.getHeight(), subImage.getType());
+                Graphics2D g = copiedSubImage.createGraphics();
+                g.drawImage(subImage, 0, 0, null);
+                g.dispose();
+                
+                puzzle.pieces.add(new PuzzlePiece(copiedSubImage));
             }
         }
         
@@ -31,21 +38,25 @@ public class Puzzle {
         this.pieceSize = pieceSize;
         this.pieces = new ArrayList<PuzzlePiece>();
     }
-
+    
     public int getWidth() {
         return width;
     }
-
+    
     public int getHeight() {
         return height;
     }
-
+    
     public int getPieceSize() {
         return pieceSize;
     }
-
+    
     public List<PuzzlePiece> getPieces() {
         return Collections.unmodifiableList(pieces);
+    }
+    
+    public PuzzlePiece getPieceAt(int x, int y) {
+        return pieces.get((y * (height / pieceSize)) + x);
     }
     
 }

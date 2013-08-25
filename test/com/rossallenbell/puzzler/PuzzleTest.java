@@ -1,31 +1,23 @@
 package com.rossallenbell.puzzler;
 
-import static org.junit.Assert.*;
+import static com.rossallenbell.puzzler.util.TestUtil.MOTORCYCLE;
+import static com.rossallenbell.puzzler.util.TestUtil.MOTORCYLEHEIGHT;
+import static com.rossallenbell.puzzler.util.TestUtil.MOTORCYLEWIDTH;
+import static com.rossallenbell.puzzler.util.TestUtil.PIECESIZE;
+import static org.junit.Assert.assertEquals;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PuzzleTest {
     
-    private static BufferedImage image;
-    
-    @BeforeClass
-    public static void initialize() throws IOException {
-        URL resourceURL = PuzzlerTest.class.getClassLoader().getResource("test-resources/motorcycle.jpg");
-        image = ImageIO.read(resourceURL);
-    }
-    
     @Test
-    public void testGeneratePuzzle() {
-        Puzzle puzzle = Puzzle.generate(image, 1280, 960, 80);
+    public void testGeneratePuzzle() throws IOException {
+        Puzzle puzzle = Puzzle.generate(MOTORCYCLE, MOTORCYLEWIDTH, MOTORCYLEHEIGHT, PIECESIZE);
         
-        assertEquals(16 * 12, puzzle.getPieces().size());
+        assertEquals((MOTORCYLEWIDTH / PIECESIZE) * (MOTORCYLEHEIGHT / PIECESIZE), puzzle.getPieces().size());
+        //assertTrue(TestUtil.bufferedImagesEqual(MOTORCYCLE_1_1_80, puzzle.getPieceAt(1,1).getImage()));
     }
     
 }
