@@ -29,7 +29,21 @@ public class PuzzlerTest {
         
         assertEquals(150, puzzle.getWidth());
         assertEquals(100, puzzle.getHeight());
-        assertEquals(10, puzzle.getPieceSize());;
+        assertEquals(10, puzzle.getPieceSize());
+    }
+    
+    @Test
+    public void testPuzzlefyDefaultSizes() {
+        Puzzle puzzle = puzzler.puzzlefy(image, 40);
+        
+        assertEquals(1280, puzzle.getWidth());
+        assertEquals(960, puzzle.getHeight());
+        assertEquals(40, puzzle.getPieceSize());
+    }
+    
+    @Test (expected=IllegalArgumentException.class) 
+    public void testPuzzlefyInvalidSizeInput() {
+        puzzler.puzzlefy(image, 150, 100, 15);
     }
     
 }
