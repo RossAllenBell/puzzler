@@ -56,7 +56,7 @@ public class Puzzle {
     }
     
     public PuzzlePiece getPieceAt(int x, int y) {
-        return pieces.get((y * (height / pieceSize)) + x);
+        return pieces.get((y * (width / pieceSize)) + x);
     }
     
 }
