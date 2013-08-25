@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.rossallenbell.puzzler.PuzzlePiece.DIR;
+
 public class Puzzle {
     
     private int width;
@@ -25,7 +27,12 @@ public class Puzzle {
                 g.drawImage(subImage, 0, 0, null);
                 g.dispose();
                 
-                puzzle.pieces.add(new PuzzlePiece(copiedSubImage));
+                PuzzlePieceEdge north = y == 0? PuzzlePieceEdge.FLAT : puzzle.getPieceAt(x, y-1).getEdge(DIR.SOUTH).creatInverted();
+                PuzzlePieceEdge east = x + 1 == puzzle.width / puzzle.pieceSize? PuzzlePieceEdge.FLAT : PuzzlePieceEdge.createRandom();
+                PuzzlePieceEdge south = y + 1 == puzzle.height / puzzle.pieceSize? PuzzlePieceEdge.FLAT : PuzzlePieceEdge.createRandom();
+                PuzzlePieceEdge west = x == 0? PuzzlePieceEdge.FLAT : puzzle.getPieceAt(x-1, y).getEdge(DIR.EAST).creatInverted();
+                
+                puzzle.pieces.add(new PuzzlePiece(copiedSubImage, north, east, south, west));
             }
         }
         

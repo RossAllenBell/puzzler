@@ -11,6 +11,7 @@ public class TestUtil {
     
     public static BufferedImage MOTORCYCLE;
     public static BufferedImage MOTORCYCLE_1_1_80;
+    
     static {
         try {
             MOTORCYCLE = ImageIO.read(PuzzlerTest.class.getClassLoader().getResource("test-resources/motorcycle.jpg"));
