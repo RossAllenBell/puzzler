@@ -11,16 +11,6 @@ public class PuzzlePieceEdge {
     
     public static enum FEATURE {
         NONE, NUB_STRAIGHT, NUB_LEFT, NUB_RIGHT;
-
-        public FEATURE invert() {
-            switch(this) {
-                case NONE: return NONE;
-                case NUB_STRAIGHT: return NUB_STRAIGHT;
-                case NUB_LEFT: return NUB_RIGHT;
-                case NUB_RIGHT: return NUB_LEFT;
-            }
-            return NONE;
-        }
     }
     
     public static final Map<FEATURE, BufferedImage> FEATURE_IMAGES;    
@@ -37,7 +27,7 @@ public class PuzzlePieceEdge {
     }
     
     public static final PuzzlePieceEdge FLAT = new PuzzlePieceEdge(FEATURE.NONE, false);
-    public static final double FEATURE_WIDTH_RATIO = 0.25;
+    public static final double FEATURE_WIDTH_RATIO = 1 / 3.0;
     
     private static FEATURE[] featuresWithoutNone = new FEATURE[]{FEATURE.NUB_STRAIGHT, FEATURE.NUB_LEFT, FEATURE.NUB_RIGHT};
     
@@ -58,7 +48,7 @@ public class PuzzlePieceEdge {
     }
 
     public PuzzlePieceEdge creatInverted() {
-        return new PuzzlePieceEdge(this.feature.invert(), this.feature == FEATURE.NONE? false : !this.inverted);
+        return new PuzzlePieceEdge(this.feature, this.feature == FEATURE.NONE? false : !this.inverted);
     }
 
     public static PuzzlePieceEdge createRandom() {

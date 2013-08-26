@@ -76,22 +76,33 @@ public class PuzzlePiece {
     }
     
     private static BufferedImage cutPieceImage(BufferedImage pieceBoundsImage, PuzzlePiece puzzlePiece) {
+        double edgeThickness = pieceBoundsImage.getHeight() / ((1 / PuzzlePieceEdge.FEATURE_WIDTH_RATIO) + 2);
+        
         Graphics2D g = pieceBoundsImage.createGraphics();        
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.DST_IN);
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setComposite(ac);
         
         for (DIR dir : DIR.values()) {
             BufferedImage featureImage = PuzzlePieceEdge.FEATURE_IMAGES.get(puzzlePiece.getEdge(dir).getFeature());
             BufferedImage scaledFeatureImage = new BufferedImage(pieceBoundsImage.getWidth(), pieceBoundsImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D gF = scaledFeatureImage.createGraphics();
             AffineTransform at = new AffineTransform();
+            
             at.translate(scaledFeatureImage.getWidth() / 2, scaledFeatureImage.getHeight() / 2);
             at.rotate(dir.getRotation());
             at.translate(-scaledFeatureImage.getWidth() / 2, -scaledFeatureImage.getHeight() / 2);
             at.scale(scaledFeatureImage.getWidth() / (double) featureImage.getWidth(), scaledFeatureImage.getHeight() / (double) featureImage.getHeight());
+            
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.DST_IN);
+            if (puzzlePiece.getEdge(dir).isInverted()) {
+                at.scale(1, -1);
+                at.translate(0, edgeThickness * -8); //can't figure out why the mulitplier is 8 and not 2
+                
+                ac = AlphaComposite.getInstance(AlphaComposite.DST_OUT);
+            }
+            
             gF.drawImage(featureImage, at, null);
             gF.dispose();
+            g.setComposite(ac);
             g.drawImage(scaledFeatureImage, 0, 0, scaledFeatureImage.getWidth(), scaledFeatureImage.getHeight(), null);
         }
         
