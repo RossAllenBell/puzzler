@@ -1,5 +1,12 @@
 package com.rossallenbell.puzzler;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+
 public class PuzzlePieceEdge {
     
     public static enum FEATURE {
@@ -13,6 +20,19 @@ public class PuzzlePieceEdge {
                 case NUB_RIGHT: return NUB_LEFT;
             }
             return NONE;
+        }
+    }
+    
+    public static final Map<FEATURE, BufferedImage> FEATURE_IMAGES;    
+    static {
+        FEATURE_IMAGES = new HashMap<>();
+        try {
+            FEATURE_IMAGES.put(FEATURE.NONE, ImageIO.read(PuzzlerTest.class.getClassLoader().getResource("resources/none.png")));
+            FEATURE_IMAGES.put(FEATURE.NUB_STRAIGHT, ImageIO.read(PuzzlerTest.class.getClassLoader().getResource("resources/nub-straight.png")));
+            FEATURE_IMAGES.put(FEATURE.NUB_LEFT, ImageIO.read(PuzzlerTest.class.getClassLoader().getResource("resources/nub-left.png")));
+            FEATURE_IMAGES.put(FEATURE.NUB_RIGHT, ImageIO.read(PuzzlerTest.class.getClassLoader().getResource("resources/nub-right.png")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     

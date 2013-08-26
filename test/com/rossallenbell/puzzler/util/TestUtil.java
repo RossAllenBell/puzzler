@@ -9,8 +9,8 @@ import com.rossallenbell.puzzler.PuzzlerTest;
 
 public class TestUtil {
     
-    public static BufferedImage MOTORCYCLE;
-    public static BufferedImage MOTORCYCLE_1_1_80;
+    public static final BufferedImage MOTORCYCLE;
+    public static final BufferedImage MOTORCYCLE_1_1_80;
     
     static {
         try {
