@@ -13,6 +13,8 @@ public class TestScript {
     
     public static void main(String[] args) throws IOException {
         System.out.println("starting test script");
+        File testDirectory = new File("test/debugging-output/");
+        testDirectory.createNewFile();
         Puzzle puzzle = new Puzzler().puzzlefy(TestUtil.MOTORCYCLE, TestUtil.PIECESIZE);
         BufferedImage fullPuzzledImage = new BufferedImage(puzzle.getPuzzlePieceActualSizeInPixels() * puzzle.getWidthInPieces(), puzzle.getPuzzlePieceActualSizeInPixels() * puzzle.getHeightInPieces(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D fpiG = fullPuzzledImage.createGraphics();
