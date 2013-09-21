@@ -10,18 +10,18 @@ import com.rossallenbell.puzzler.PuzzlePiece.DIR;
 
 public class Puzzle {
     
-    private int width;
-    private int height;
-    private int pieceSize;
+    private int widthInPixels;
+    private int heightInPixels;
+    private int pieceSizeInPixels;
     
     private List<PuzzlePiece> pieces;
     
-    public static Puzzle generate(BufferedImage image, int width, int height, int pieceSize) {
-        Puzzle puzzle = new Puzzle(width, height, pieceSize);
+    public static Puzzle generate(BufferedImage image, int widthInPixels, int heightInPixels, int pieceSize) {
+        Puzzle puzzle = new Puzzle(widthInPixels, heightInPixels, pieceSize);
         
-        int outerPieceSize = pieceSize + (int) (PuzzlePieceEdge.FEATURE_WIDTH_RATIO * pieceSize * 2);
-        for (int y = 0; y < puzzle.height / puzzle.pieceSize; y++) {
-            for (int x = 0; x < puzzle.width / puzzle.pieceSize; x++) {
+        int outerPieceSize = puzzle.getPuzzlePieceActualSizeInPixels();
+        for (int y = 0; y < puzzle.heightInPixels / puzzle.pieceSizeInPixels; y++) {
+            for (int x = 0; x < puzzle.widthInPixels / puzzle.pieceSizeInPixels; x++) {
                 BufferedImage pieceBoundsImage = new BufferedImage(outerPieceSize, outerPieceSize, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D g = pieceBoundsImage.createGraphics();
                 
@@ -36,8 +36,8 @@ public class Puzzle {
                 g.dispose();
                 
                 PuzzlePieceEdge north = y == 0? PuzzlePieceEdge.FLAT : puzzle.getPieceAt(x, y-1).getEdge(DIR.SOUTH).creatInverted();
-                PuzzlePieceEdge east = x + 1 == puzzle.width / puzzle.pieceSize? PuzzlePieceEdge.FLAT : PuzzlePieceEdge.createRandom();
-                PuzzlePieceEdge south = y + 1 == puzzle.height / puzzle.pieceSize? PuzzlePieceEdge.FLAT : PuzzlePieceEdge.createRandom();
+                PuzzlePieceEdge east = x + 1 == puzzle.widthInPixels / puzzle.pieceSizeInPixels? PuzzlePieceEdge.FLAT : PuzzlePieceEdge.createRandom();
+                PuzzlePieceEdge south = y + 1 == puzzle.heightInPixels / puzzle.pieceSizeInPixels? PuzzlePieceEdge.FLAT : PuzzlePieceEdge.createRandom();
                 PuzzlePieceEdge west = x == 0? PuzzlePieceEdge.FLAT : puzzle.getPieceAt(x-1, y).getEdge(DIR.EAST).creatInverted();
                 
                 puzzle.pieces.add(new PuzzlePiece(pieceBoundsImage, north, east, south, west));
@@ -48,22 +48,34 @@ public class Puzzle {
     }
     
     private Puzzle(int width, int height, int pieceSize) {
-        this.width = width;
-        this.height = height;
-        this.pieceSize = pieceSize;
+        this.widthInPixels = width;
+        this.heightInPixels = height;
+        this.pieceSizeInPixels = pieceSize;
         this.pieces = new ArrayList<PuzzlePiece>();
     }
     
-    public int getWidth() {
-        return width;
+    public int getPuzzlePieceActualSizeInPixels() {
+        return pieceSizeInPixels + (int) (PuzzlePieceEdge.FEATURE_WIDTH_RATIO * pieceSizeInPixels * 2);
     }
     
-    public int getHeight() {
-        return height;
+    public int getWidthInPixels() {
+        return widthInPixels;
     }
     
-    public int getPieceSize() {
-        return pieceSize;
+    public int getHeightInPixels() {
+        return heightInPixels;
+    }
+    
+    public int getWidthInPieces() {
+        return widthInPixels / pieceSizeInPixels;
+    }
+    
+    public int getHeightInPieces() {
+        return heightInPixels / pieceSizeInPixels;
+    }
+    
+    public int getPieceSizeInPixels() {
+        return pieceSizeInPixels;
     }
     
     public List<PuzzlePiece> getPieces() {
@@ -71,7 +83,7 @@ public class Puzzle {
     }
     
     public PuzzlePiece getPieceAt(int x, int y) {
-        return pieces.get((y * (width / pieceSize)) + x);
+        return pieces.get((y * (widthInPixels / pieceSizeInPixels)) + x);
     }
     
 }

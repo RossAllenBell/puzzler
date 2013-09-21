@@ -29,18 +29,18 @@ public class PuzzlerTest {
     public void testPuzzlefy() {
         Puzzle puzzle = puzzler.puzzlefy(image, 150, 100, 10);
         
-        assertEquals(150, puzzle.getWidth());
-        assertEquals(100, puzzle.getHeight());
-        assertEquals(10, puzzle.getPieceSize());
+        assertEquals(150, puzzle.getWidthInPixels());
+        assertEquals(100, puzzle.getHeightInPixels());
+        assertEquals(10, puzzle.getPieceSizeInPixels());
     }
     
     @Test
     public void testPuzzlefyDefaultSizes() {
         Puzzle puzzle = puzzler.puzzlefy(image, 40);
         
-        assertEquals(MOTORCYLEWIDTH, puzzle.getWidth());
-        assertEquals(MOTORCYLEHEIGHT, puzzle.getHeight());
-        assertEquals(40, puzzle.getPieceSize());
+        assertEquals(MOTORCYLEWIDTH, puzzle.getWidthInPixels());
+        assertEquals(MOTORCYLEHEIGHT, puzzle.getHeightInPixels());
+        assertEquals(40, puzzle.getPieceSizeInPixels());
     }
     
     @Test(expected = IllegalArgumentException.class)
